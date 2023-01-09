@@ -1,0 +1,50 @@
+resource_types:
+- name: terraform
+  type: docker-image
+  source:
+    repository: ljfranklin/terraform-resource
+    tag: latest
+
+resources:  
+  - name: Project-Maverick
+    type: git
+    source:
+        uri: https://github.com/BoltonMaverick/Project-Maverick.git
+        branch: main  
+        
+  - name: Infrastructure 
+    type: terraform
+    source:
+      path: 
+      env_name: Dev
+      backend_type: s3
+      backend_config:
+        bucket: project-marverick
+        key: marverick/terraform.tfstate
+        region: eu-west-2
+        access_key: AKIAURKJIQQQRXYPJTFR
+        secret_key: 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
+      vars:
+        tag_name: concourse
+      env:
+        AWS_ACCESS_KEY_ID: AKIAURKJIQQQRXYPJTFR
+        AWS_SECRET_ACCESS_KEY: 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
+    #     access_key: {{storage_access_key}}
+    #     secret_key: {{storage_secret_key}}
+    #   vars:
+    #     tag_name: concourse
+    #   env:
+    #     AWS_ACCESS_KEY_ID: {{environment_access_key}}
+    #     AWS_SECRET_ACCESS_KEY: {{environment_secret_key}}
+jobs:
+  - name: deploy
+    plan:
+    - get: Project-Maverick
+      trigger: true
+    - put: infrastructure
+      params:
+        plan: true
+        destroy: false
+    - put: infrastructure
+      params:
+        apply: true

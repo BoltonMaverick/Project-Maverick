@@ -1,0 +1,7 @@
+.envrc
+docker-compose.yml
+Makefile
+*.txt
+Dockerfile
+*tfstate
+/data
