@@ -48,10 +48,6 @@ resource "azurerm_network_security_group" "mav-sg" {
   resource_group_name = azurerm_resource_group.mav.name
 
   tags = var.tags
-
-
-
-
 }
 
 #create network security rule 
