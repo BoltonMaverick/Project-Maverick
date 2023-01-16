@@ -125,7 +125,7 @@ resource "azurerm_linux_virtual_machine" "mav-vm" {
   disable_password_authentication = false
   allow_extension_operations      = true
 
-  custom_data = filebase64("customdata.tpl")
+  #custom_data = filebase64("customdata.tpl")
 
   network_interface_ids = [
     azurerm_network_interface.mav-nic.id,
