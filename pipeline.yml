@@ -4,6 +4,7 @@ resource_types:
   source:
     repository: ljfranklin/terraform-resource
     tag: latest
+    version: 2.3
 
 resources:  
   - name: project-maverick
@@ -11,6 +12,7 @@ resources:
     source:
       uri: https://github.com/BoltonMaverick/Project-Maverick.git
       branch: main  
+      version: 2.3
       
         
   - name: infrastructure 
@@ -22,7 +24,7 @@ resources:
       backend_config:
         bucket: project-maverick
         key: marverick/terraform.tfstate
-        region: eu-west-2
+        region: us-east-1
         access_key: AKIAURKJIQQQRXYPJTFR
         secret_key: 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
       vars:
@@ -54,7 +56,7 @@ jobs:
         env_name: dev
         terraform_source: project-maverick/terraform
         plan_run: true
-
+    
     - task: terraform-apply 
       config:
         platform: linux 
@@ -69,4 +71,5 @@ jobs:
                 - -c
                 - |
                   cd project-maverick/terraform
+                  terraform init
                   terraform apply --auto-approve 
