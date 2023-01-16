@@ -5,7 +5,8 @@ login:
 deploy: 
 	fly -t black set-pipeline -p infrastructure -c pipeline.yml
 	fly -t black unpause-pipeline -p infrastructure
-	fly -t black trigger-job --job infrastructure/deploy --watch
+	fly -t black trigger-job --job infrastructure/terraform-plan 
+	fly -t black trigger-job --job infrastructure/terraform-apply --watch
 
 clean: 
 	fly -t black destroy-pipeline -p infrastructure
